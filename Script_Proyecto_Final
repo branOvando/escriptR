@@ -1,0 +1,41 @@
+base<-read.table("Ingresos.txt", header=TRUE,   na.strings = "NA")# Cargado de datos
+base
+attach(base)
+names(base)
+con_estudios #Vector
+sin_estudios #Vector
+
+#Verificacion de la distribucion de los datos
+	#Histograma
+par(mfrow = c(1, 2))
+hist(con_estudios, main = "Con titulo", xlab = "Ingresos Mensuales",ylab = "Frecuencia", col = "green")
+hist(sin_estudios, main = "Sin titulo", xlab = "Ingresos Mensuales",ylab = "Frecuencia", col = "yellow")
+
+	#Prueba de Shapiro
+shapiro.test(con_estudios)
+Ho= La variable tiene una distribucion normal
+Ha= La variable NO tiene una distribucion normal
+#p=1.33e-06, lo que es menor que el nivel de significancia (0.05), por lo tanto, 
+se rechaza la hipotesis nula y la variable NO sigue una distribucion normal.
+
+shapiro.test(sin_estudios)
+
+Ho= La variable tiene una distribucion normal
+Ha= La variable NO tiene una distribucion normal
+#p=1.391e-10, lo que es menor que el nivel de significancia (0.05), por lo tanto, se rechaza la hipotesis nula y la variable NO sigue una distribucion normal
+
+#Ya que la variable no sigue una distribucion normal se procede a usar una prueba de Wilcoxon para distribuciones no parametricas
+#Prueba de Mann-Witney y Wilcoxon para dos muestras independientes 
+Ho = Los ingresos de las personas con titulo universitario y sin titulo universitario son iguales
+Ha = Los ingresos de las personas con titulo universitario son mayores que los ingresos de las personas sin titulo universitario
+
+Ho = mu (con_estudios) = mu (sin_estudios)
+Ha = mu (con_estudios) > mu (sin_estudios)
+
+wilcox.test(x = con_estudios, y = sin_estudios,
+            alternative = "greater",
+            mu = 0, paired = FALSE,
+            conf.level = 0.95)
+#p=2.077e-10 ,por lo tanto, se RECHAZA la hipótesis nula y se ACEPTA la hipótesis alternativa
+	#Decisión
+RECHAZAMOS la hipotesis nula y aceptamos que los ingresos de las personas con titulo universitario son mayores que los ingresos de las personas sin titulo universitario
