@@ -1,0 +1,8 @@
+sigma<-1617.558969 #desviacion estandar calculada de un estudio previo del INE
+z=1.96 # coheficiente de nivel de confianza al 95 % de la probabilidad
+N=430712 # Tamaño de la población
+e=5 #Nivel de error en porcentaje, 5%
+n<- ((z*sigma)/e)^2# formula mas sencilla sin considerar población.
+n #402061 personas
+n <- sigma^2/((e^2/z^2)+(sigma^2/(N-1)))#formula considerando tamaño de la población
+n #207947 personas
