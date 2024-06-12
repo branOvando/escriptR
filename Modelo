@@ -1,0 +1,69 @@
+base<-read.table("Ingresos.txt", header=TRUE,   na.strings = "NA")# Cargado de datos
+base
+attach(base)
+names(base)
+
+con_estudios #Vector
+sin_estudios #Vector
+
+#Verificacion de la distribucion de los datos
+	#Histograma
+par(mfrow = c(1, 2))
+hist(con_estudios, main = "Con estudios", xlab = "Ingresos Mensuales",ylab = "Frecuencia", col = "green")
+hist(sin_estudios, main = "Sin estudios", xlab = "Ingresos Mensuales",ylab = "Frecuencia", col = "Yellow")
+	#Prueba de Shapiro
+shapiro.test(con_estudios)
+Ho= La variable tiene una distribucion normal
+Ha= La variable NO tiene una distribucion normal
+#p= ,por lo tanto, la variable SI/NO sigue una distribucion normal
+shapiro.test(sin_estudios)
+Ho= La variable tiene una distribucion normal
+Ha= La variable NO tiene una distribucion normal
+#p= ,por lo tanto, la variable SI/NO sigue una distribucion normal
+
+
+#Prueba t-student para dos muestras independientes
+(
+	#Verficacion de la dispersion de los datos de ambas muestras
+	#Boxplot
+par(mfrow = c(1, 2))
+boxplot(con_estudios, main = "Con estudios", ylab = "Ingresos Mensuales", col = "blue")
+boxplot(sin_estudios, main = "Sin estudios", ylab = "Ingresos Mensuales", col = "red")
+	#Prueba "var.test"
+var.test(con_estudios,sin_estudios)
+Ho= Las varianzas son iguales
+Ha= Las varianzas NO son iguales
+#p= ,por lo tanto, las varianzas SI/NO son iguales
+)
+Ho = Los ingresos de las personas con estudios y sin estudios son iguales
+Ha = Los ingresos de las personas con estudios y sin estudios son diferentes
+
+Ho = mu (con_estudios) = mu (sin_estudios)
+Ha = mu (con_estudios) > mu (sin_estudios)
+
+t.test(x = con_estudios, y = sin_estudios,
+	alternative = "greater",
+	mu = 0, paired = FALSE, 
+	var.equal = TRUE/FALSE,conf.level = 0.95)
+#p= ,por lo tanto, se ACEPTA/RECHAZA la hipótesis nula y se ACEPTA/RECHAZA la hipótesis alternativa
+	#Decisión
+ACEPTAMOS/RECHAZAMOS la hipotesis nula, por lo tanto/y aceptamos que 
+
+
+#Prueba de Mann-Witney y Wilcoxon para dos muestras
+Ho = Los ingresos de las personas con estudios y sin estudios son iguales
+Ha = Los ingresos de las personas con estudios y sin estudios son diferentes
+
+Ho = mu (con_estudios) = mu (sin_estudios)
+Ha = mu (con_estudios) > mu (sin_estudios)
+
+wilcox.test(x = con_estudios, y = sin_estudios,
+            alternative = "greater",
+            mu = 0, paired = FALSE,
+            conf.level = 0.95)
+#p= ,por lo tanto, se ACEPTA/RECHAZA la hipótesis nula y se ACEPTA/RECHAZA la hipótesis alternativa
+	#Decisión
+ACEPTAMOS/RECHAZAMOS la hipotesis nula, por lo tanto/y aceptamos que 
+
+
+
